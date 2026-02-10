@@ -2,8 +2,6 @@ package com.project.BookfairReservationApp.entity;
 
 import com.project.BookfairReservationApp.enumtype.StallSize;
 import com.project.BookfairReservationApp.enumtype.StallStatus;
-import jakarta.persistence.Id;
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,7 +11,9 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Stall {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -39,5 +39,8 @@ public class Stall {
     @JoinColumn(name = "hall_id", nullable = false)
     private Hall hall;
 
+    // Track which user reserved the stall
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reserved_by_id")
+    private User reservedBy;
 }
-
