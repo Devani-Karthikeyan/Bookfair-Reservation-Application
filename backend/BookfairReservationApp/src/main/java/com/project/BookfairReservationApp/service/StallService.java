@@ -26,7 +26,7 @@ public class StallService {
             throw new RuntimeException("Stall is not available for reservation");
         }
 
-        if (!(user.getRole().name().equals("PUBLISHER") || user.getRole().name().equals("VENDOR"))) {
+        if (!(user.getRoles().name().equals("PUBLISHER") || user.getRoles().name().equals("VENDOR"))) {
             throw new RuntimeException("Only Publisher or Vendor can reserve stalls");
         }
 

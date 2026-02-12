@@ -1,48 +1,47 @@
 package com.project.BookfairReservationApp.entity;
 
-import com.project.BookfairReservationApp.enumtype.Role;
+import com.project.BookfairReservationApp.enumtype.Roles;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDateTime;
+
 @Entity
-@Table(
-        name = "users",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = "email"),
-                @UniqueConstraint(columnNames = "phone_number")
-        }
-)
+@Table(name = "users")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_name", nullable = false)
-    private String userName;
+    @NotBlank(message = "Name cannot be empty")
+    @Size(min = 3, max = 50, message = "Name must be between 3 to 50 characters")
+    private String firstName;
 
-    // Business name (publisher/vendor)
-    @Column(name = "business_name", nullable = true)
-    private String businessName;
+    @Size(min = 3, max = 50, message = "Name must be between 3 to 50 characters")
+    private String lastName;
 
-    @Column(nullable = false, unique = true)
+    @NotBlank(message = "Mobile number cannot be empty")
+    @Size(min = 9, max = 14, message = "Mobile number must be between 9 to 14 characters")
+    private String mobileNumber;
+
+    @NotBlank(message = "Email cannot be empty")
+    @Email(message = "Invalid email format")
+    @Column(unique = true)
     private String email;
 
-    @Column(name = "phone_number", nullable = false, unique = true)
-    private String phoneNumber;
-
-    @Column(nullable = false)
+    @NotBlank(message = "Password cannot be empty")
+    @Size(min = 8, message = "Password must be at least 8 characters")
     private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;
+    private Roles roles;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
